@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Slate and Blue -->
     <!-- Application Structure Plan: A single-page application with three distinct views: a start screen, a one-question-at-a-time quiz interface, and a final results screen. This structure turns passive reading into an active learning experience by focusing the user on a single question, providing immediate feedback, and summarizing performance at the end. This is far more effective for studying and self-assessment than a static list. -->
-    <!-- Visualization & Content Choices: The source report contains 50 multiple-choice questions. The goal is knowledge testing. The best presentation is an interactive quiz format. Questions are displayed as text, and options are interactive buttons. User clicks provide immediate color-coded feedback (green for correct, red for incorrect). A progress bar and final score are displayed as text. This approach is direct, intuitive, and requires no complex charts, using only HTML, Tailwind CSS, and Vanilla JS. -->
+    <!-- Visualization & Content Choices: The source report contains 100 multiple-choice questions. The goal is knowledge testing. The best presentation is an interactive quiz format. Questions are displayed as text, and options are interactive buttons. User clicks provide immediate color-coded feedback (green for correct, red for incorrect). A progress bar and final score are displayed as text. This approach is direct, intuitive, and requires no complex charts, using only HTML, Tailwind CSS, and Vanilla JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -37,19 +37,22 @@
 </head>
 <body class="bg-slate-100 text-slate-800 flex items-center justify-center min-h-screen p-4">
 
-    <div id="quiz-container" class="w-full max-w-2xl mx-auto">
+    <div id="quiz-container" class="w-full max-w-5xl mx-auto">
 
         <!-- Start Screen -->
         <div id="start-screen" class="text-center bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Computer Fundamentals Quiz</h1>
-            <p class="text-slate-600 mb-8 text-base md:text-lg">Test your knowledge with these 50 multiple-choice questions covering the basics of computer hardware, software, and history. Click 'Start Quiz' to begin.</p>
-            <button id="start-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Start Quiz</button>
+            <p class="text-slate-600 mb-8 text-base md:text-lg">Choose a quiz set to test your knowledge:</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <button id="start-part1-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 1 (1-50)</button>
+                <button id="start-part2-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 2 (51-100)</button>
+            </div>
         </div>
 
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden bg-white p-6 md:p-8 rounded-xl shadow-lg">
             <div id="progress-container" class="mb-4">
-                <p class="text-sm text-slate-600 text-center">Question <span id="current-question-number"></span> of 50</p>
+                <p class="text-sm text-slate-600 text-center">Question <span id="current-question-number"></span> of <span id="total-questions-in-part"></span></p>
                 <div class="w-full bg-slate-200 rounded-full h-2.5 mt-1">
                     <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
                 </div>
@@ -74,7 +77,7 @@
         <div id="results-screen" class="hidden text-center bg-white p-8 rounded-xl shadow-lg">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Quiz Complete!</h1>
             <p class="text-slate-600 text-lg mb-6">Your final score is:</p>
-            <p class="text-6xl font-bold text-blue-600 mb-8"><span id="score-text"></span> / 50</p>
+            <p class="text-6xl font-bold text-blue-600 mb-8"><span id="score-text"></span> / <span id="total-score-denominator"></span></p>
             <p id="score-message" class="text-xl font-medium mb-8"></p>
             <button id="restart-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Restart Quiz</button>
         </div>
@@ -82,7 +85,7 @@
     </div>
 
     <script>
-        const questions = [
+        const allQuestions = [
             { question: "Who is known as the “Father of Computers”?", hindi_question: "कम्प्यूटर का जनक या पिता किसे कहा जाता है?", exam_info: "(SSC CGL 2019)", options: ["Alan Turing", "Charles Babbage", "Steve Jobs", "John von Neumann"], answer: "Charles Babbage" },
             { question: "Which of the following is the brain of the computer?", hindi_question: "निम्नलिखित में से कौन कंप्यूटर का मस्तिष्क होता है?", exam_info: "(RRB NTPC 2016)", options: ["Monitor", "RAM", "CPU", "Keyboard"], answer: "CPU" },
             { question: "What does RAM stand for?", hindi_question: "RAM का पूर्ण रूप क्या है?", exam_info: "(UP Police 2018)", options: ["Read After Memory", "Random Access Memory", "Rapid Access Module", "Run Access Memory"], answer: "Random Access Memory" },
@@ -124,7 +127,7 @@
             { question: "Which key combination is used for copying selected text?", hindi_question: "चयनित पाठ की कॉपी के लिए कौन सा कुंजी संयोजन उपयोग किया जाता है?", exam_info: "(SSC GD 2020)", options: ["Ctrl + X", "Ctrl + V", "Ctrl + C", "Ctrl + S"], answer: "Ctrl + C" },
             { question: "Which part of the computer holds data temporarily for execution?", hindi_question: "कंप्यूटर का कौन-सा हिस्सा निष्पादन के लिए डेटा अस्थायी रूप से रखता है?", exam_info: "(Railway 2021)", options: ["Hard Disk", "Register", "RAM", "ROM"], answer: "RAM" },
             { question: "Which of these is a pointing device?", hindi_question: "इनमें से कौन एक पॉइंटिंग डिवाइस है?", exam_info: "(SSC CHSL 2022)", options: ["Joystick", "CPU", "RAM", "Scanner"], answer: "Joystick" },
-            { question: "Which of the following is used to display text and graphics?", hindi_info: "निम्नलिखित में से किसका उपयोग टेक्स्ट और ग्राफिक्स प्रदर्शित करने के लिए किया जाता है?", exam_info: "(UP PCS 2021)", options: ["Keyboard", "Monitor", "Printer", "Mouse"], answer: "Monitor" },
+            { question: "Which of the following is used to display text and graphics?", hindi_question: "निम्नलिखित में से किसका उपयोग टेक्स्ट और ग्राफिक्स प्रदर्शित करने के लिए किया जाता है?", exam_info: "(UP PCS 2021)", options: ["Keyboard", "Monitor", "Printer", "Mouse"], answer: "Monitor" },
             { question: "Which part interprets and executes instructions?", hindi_question: "कौन-सा भाग निर्देशों की व्याख्या और निष्पादन करता है?", exam_info: "(SSC CGL 2020)", options: ["ALU", "Register", "Control Unit", "Memory Unit"], answer: "Control Unit" },
             { question: "Which of these stores data permanently?", hindi_question: "इनमें से कौन डेटा को स्थायी रूप से स्टोर करता है?", exam_info: "(SSC MTS 2021)", options: ["RAM", "ROM", "Hard Disk", "Cache"], answer: "Hard Disk" },
             { question: "The process of starting a computer is known as:", hindi_question: "कंप्यूटर स्टार्ट करने की प्रक्रिया को क्या कहा जाता है?", exam_info: "(Bank Clerk 2022)", options: ["Logging in", "Booting", "Formatting", "Executing"], answer: "Booting" },
@@ -132,44 +135,106 @@
             { question: "Which memory is fastest in computers?", hindi_question: "कंप्यूटर्स में कौन सी मेमोरी सबसे तेज होती है?", exam_info: "(SSC CGL 2021)", options: ["Cache", "RAM", "ROM", "Hard Disk"], answer: "Cache" },
             { question: "Which of the following is used in graphics cards for processing?", hindi_question: "ग्राफ़िक्स कार्ड में प्रोसेसिंग के लिए किसका उपयोग होता है?", exam_info: "(Rajasthan RPSE 2021)", options: ["GPU", "CPU", "RAM", "BIOS"], answer: "GPU" },
             { question: "What is software that can harm a computer called?", hindi_question: "कंप्यूटर को नुकसान पहुंचाने वाला सॉफ्टवेयर क्या कहलाता है?", exam_info: "(SSC CHSL 2019)", options: ["Malware", "Hardware", "Firmware", "Freeware"], answer: "Malware" },
-            { question: "What is the function of an expansion slot?", hindi_question: "एक्सपैंशन स्लॉट का कार्य क्या है?", exam_info: "(UP VDO 2022)", options: ["To expand memory capacity", "To add additional hardware components", "To control CPU speed", "To manage software execution"], answer: "To add additional hardware components" }
+            { question: "What is the function of an expansion slot?", hindi_question: "एक्सपैंशन स्लॉट का कार्य क्या है?", exam_info: "(UP VDO 2022)", options: ["To expand memory capacity", "To add additional hardware components", "To control CPU speed", "To manage software execution"], answer: "To add additional hardware components" },
+            { question: "What does UPS stand for?", hindi_question: "UPS का पूरा नाम क्या है?", exam_info: "(Rajasthan VDO 2021)", options: ["Uninterrupted Power Supply", "Uniform Power Supply", "Unified Power Source", "Uninterrupted Power Source"], answer: "Uninterrupted Power Supply" },
+            { question: "Which memory type retains data after power is turned off?", hindi_question: "कौन-सी मेमोरी पावर बंद होने के बाद भी डेटा रखती है?", exam_info: "(RPSE Rajasthan 2022)", options: ["RAM", "ROM", "Cache", "Register"], answer: "ROM" },
+            { question: "What is the primary circuit board in a computer?", hindi_question: "कंप्यूटर में प्राथमिक सर्किट बोर्ड क्या कहलाता है?", exam_info: "(Rajasthan Patwari 2022)", options: ["Daughterboard", "Power Supply Board", "Motherboard", "Interface Board"], answer: "Motherboard" },
+            { question: "Which device is used to convert digital signals to analog signals?", hindi_question: "डिजिटल सिग्नल को एनालॉग सिग्नल में परिवर्तित करने के लिए कौन-सा डिवाइस उपयोग किया जाता है?", exam_info: "(RRB NTPC 2020)", options: ["Hub", "Router", "Modem", "Switch"], answer: "Modem" },
+            { question: "What is BIOS responsible for?", hindi_question: "BIOS किसके लिए जिम्मेदार है?", exam_info: "(Rajasthan RMSSB 2023)", options: ["Installing applications", "Initializing hardware during booting", "Managing user files", "Managing networking protocols"], answer: "Initializing hardware during booting" },
+            { question: "Which of the following is a computer output device?", hindi_question: "निम्न में से कौन कंप्यूटर का आउटपुट डिवाइस है?", exam_info: "(SSC GD 2021)", options: ["Printer", "Keyboard", "Scanner", "Mouse"], answer: "Printer" },
+            { question: "Which unit converts digital signals to analog signals?", hindi_question: "कौन-सी यूनिट डिजिटल सिग्नल को एनालॉग सिग्नल में बदलती है?", exam_info: "(UP Police 2023)", options: ["Monitor", "Modem", "Keyboard", "Speaker"], answer: "Modem" },
+            { question: "Which memory is built into the CPU?", hindi_question: "CPU में निर्मित स्मृति कौन-सी है?", exam_info: "(SSC CGL 2023)", options: ["Cache Memory", "RAM", "ROM", "Hard Disk"], answer: "Cache Memory" },
+            { question: "What does HTTP stand for?", hindi_question: "HTTP का पूरा आकार क्या है?", exam_info: "(Patwari Rajasthan 2021)", options: ["Hyper Text Transfer Protocol", "Hyperlink Text Transfer Protocol", "Hyper Text Transmission Protocol", "Hyper Terminal Transfer Protocol"], answer: "Hyper Text Transfer Protocol" },
+            { question: "What is the term for unwanted software installed without user consent?", hindi_question: "उपयोगकर्ता की सहमति के बिना स्थापित अवांछित सॉफ्टवेयर को क्या कहा जाता है?", exam_info: "(Rajasthan VDO 2022)", options: ["Freeware", "Malware", "Shareware", "Firmware"], answer: "Malware" },
+            { question: "In which memory is the Operating System stored when the computer is running?", hindi_question: "जब कंप्यूटर चल रहा होता है तो ऑपरेटिंग सिस्टम किस मेमोरी में संग्रहित होता है?", exam_info: "(SSC CHSL 2023)", options: ["ROM", "Cache", "RAM", "Hard Disk"], answer: "RAM" },
+            { question: "Which of the following is a secondary storage device?", hindi_question: "निम्नलिखित में से कौन द्वितीयक स्टोरेज डिवाइस है?", exam_info: "(SSC GD 2023)", options: ["RAM", "ROM", "Hard Disk", "Cache"], answer: "Hard Disk" },
+            { question: "What marks the start of a file name in Windows?", hindi_question: "Windows में फ़ाइल नाम की शुरुआत क्या चिन्हित करता है?", exam_info: "(Rajasthan RMSSB 2021)", options: ["Full Stop (.)", "Underscore (_)", "Hyphen (-)", "Comma (,)"], answer: "Full Stop (.)" },
+            { question: "Which key is used to delete text to the left of the cursor?", hindi_question: "कर्सर के बाईं ओर का पाठ हटाने के लिए कौन-सी कुंजी का उपयोग किया जाता है?", exam_info: "(Rajasthan Patwari 2023)", options: ["Delete", "Backspace", "Esc", "Enter"], answer: "Backspace" },
+            { question: "Which of these is NOT part of CPU?", hindi_question: "इनमें से कौन CPU का हिस्सा नहीं है?", exam_info: "(SSC CGL 2022)", options: ["ALU", "Control Unit", "Register", "RAM"], answer: "RAM" },
+            { question: "What is one gigabyte equal to?", hindi_question: "एक गीगाबाइट के बराबर कितना होता है?", exam_info: "(UP VDO 2021)", options: ["1024 bytes", "1024 kilobytes", "1024 megabytes", "1024 gigabytes"], answer: "1024 megabytes" },
+            { question: "Which of the following is an example of application software?", hindi_question: "निम्नलिखित में से कौन एप्लिकेशन सॉफ़्टवेयर का उदाहरण है?", exam_info: "(SSC MTS 2023)", options: ["Windows", "Photoshop", "BIOS", "API"], answer: "Photoshop" },
+            { question: "Which key combination saves a file in most applications?", hindi_question: "अधिकांश एप्लिकेशन में फ़ाइल सहेजने के लिए कौन सा कुंजी संयोजन उपयोग किया जाता है?", exam_info: "(SSC GD 2021)", options: ["Ctrl + A", "Ctrl + V", "Ctrl + S", "Ctrl + P"], answer: "Ctrl + S" },
+            { question: "Which software controls the computer hardware?", hindi_question: "कौन-सा सॉफ्टवेयर कंप्यूटर हार्डवेयर को नियंत्रित करता है?", exam_info: "(SSC CHSL 2022)", options: ["Application Software", "Firmware", "Operating System", "Utility Software"], answer: "Operating System" },
+            { question: "What is GUI used to make?", hindi_question: "GUI का उपयोग किसे बनाने के लिए किया जाता है?", exam_info: "(Rajasthan RPSE 2023)", options: ["Command-line interfaces", "Graphical user interfaces", "Network protocols", "Machine code"], answer: "Graphical user interfaces" },
+            { question: "Which of the following is a volatile memory?", hindi_question: "निम्नलिखित में से कौन-सी वोलाटाइल मेमोरी है?", exam_info: "(SSC CGL 2023)", options: ["ROM", "Hard Disk", "RAM", "Flash Drive"], answer: "RAM" },
+            { question: "What is the full form of PDF file?", hindi_question: "PDF फ़ाइल का पूरा नाम क्या है?", exam_info: "(Rajasthan Patwari 2023)", options: ["Portable Document Format", "Public Data File", "Protected Document File", "Portable Data Format"], answer: "Portable Document Format" },
+            { question: "Which of these is not a part of the Central Processing Unit (CPU)?", hindi_question: "इनमें से कौन CPU का हिस्सा नहीं है?", exam_info: "(UP VDO 2022)", options: ["Arithmetic Logic Unit", "Control Unit", "Cache", "Register"], answer: "Cache" },
+            { question: "Which device converts analog signals to digital signals?", hindi_question: "डिवाइस जो एनालॉग सिग्नल को डिजिटल सिग्नल में बदलता है, वह है?", exam_info: "(SSC CHSL 2023)", options: ["Modem", "Keyboard", "Analog-to-Digital Converter", "Monitor"], answer: "Analog-to-Digital Converter" },
+            { question: "What is the main purpose of an Operating System?", hindi_question: "ऑपरेटिंग सिस्टम का मुख्य उद्देश्य क्या है?", exam_info: "(Railway NTPC 2022)", options: ["To run user applications", "To manage computer’s hardware and software resources", "To create programming languages", "To maintain security protocols only"], answer: "To manage computer’s hardware and software resources" },
+            { question: "Which memory is non-volatile and used for firmware storage?", hindi_question: "कौन-सी मेमोरी गैर-वोलाटाइल होती है और फर्मवेयर स्टोरेज के लिए उपयोग की जाती है?", exam_info: "(Rajasthan RMSSB 2023)", options: ["RAM", "ROM", "Cache", "Register"], answer: "ROM" },
+            { question: "What is the function of ALU in CPU?", hindi_question: "CPU में ALU का कार्य क्या है?", exam_info: "(SSC MTS 2024)", options: ["To control the flow of data", "To perform logical and arithmetic operations", "To store temporary data", "To manage memory allocation"], answer: "To perform logical and arithmetic operations" },
+            { question: "Which part of computer is used for long-term data storage?", hindi_question: "कंप्यूटर का कौन-सा भाग दीर्घकालिक डेटा स्टोरेज के लिए उपयोग किया जाता है?", exam_info: "(SSC GD 2022)", options: ["RAM", "ROM", "Hard Disk", "Cache"], answer: "Hard Disk" },
+            { question: "What does GUI facilitate?", hindi_question: "GUI किस चीज़ को सुविधाजनक बनाता है?", exam_info: "(Rajasthan VDO 2023)", options: ["Text-only interaction", "Command-line input", "User-friendly graphical interaction", "Processor efficiency"], answer: "User-friendly graphical interaction" },
+            { question: "Which connection is used to transfer high-quality video signals?", hindi_question: "उच्च गुणवत्ता वाले वीडियो सिग्नल ट्रांसफर करने के लिए कौन कनेक्शन उपयोग होता है?", exam_info: "(UP PCS 2023)", options: ["USB", "HDMI", "VGA", "Ethernet"], answer: "HDMI" },
+            { question: "What is BIOS?", hindi_question: "BIOS क्या है?", exam_info: "(Rajasthan RPSE 2024)", options: ["Hardware component", "Firmware stored in ROM that initializes hardware", "Application software", "Type of memory"], answer: "Firmware stored in ROM that initializes hardware" },
+            { question: "What does CPU speed measured in?", hindi_question: "CPU की स्पीड किसमें मापी जाती है?", exam_info: "(SSC CGL 2024)", options: ["Hertz (Hz)", "Bytes", "Seconds", "Volts"], answer: "Hertz (Hz)" },
+            { question: "Which storage device uses magnetic tape?", hindi_question: "कौनसा स्टोरेज डिवाइस चुंबकीय टेप का उपयोग करता है?", exam_info: "(Rajasthan Patwari 2024)", options: ["Hard Disk", "Tape Drive", "Flash Drive", "Solid State Drive"], answer: "Tape Drive" },
+            { question: "What is a byte equal to?", hindi_question: "एक बाइट के बराबर क्या होता है?", exam_info: "(SSC MTS 2024)", options: ["4 bits", "8 bits", "16 bits", "32 bits"], answer: "8 bits" },
+            { question: "Which device reads data from CD?", hindi_question: "कौन-सा उपकरण CD से डेटा पढ़ता है?", exam_info: "(Railway NTPC 2023)", options: ["CD-ROM", "HDD", "USB Drive", "DVD-ROM"], answer: "CD-ROM" },
+            { question: "Which is referred to as temporary memory?", hindi_question: "जिसे अस्थायी मेमोरी कहा जाता है, वह है?", exam_info: "(UP VDO 2023)", options: ["ROM", "Hard Disk", "Cache", "RAM"], answer: "RAM" },
+            { question: "What type of device is a scanner?", hindi_question: "स्कैनर किस प्रकार का उपकरण है?", exam_info: "(SSC GD 2023)", options: ["Input Device", "Output Device", "Storage Device", "Processing Device"], answer: "Input Device" },
+            { question: "Which key is used to access help in most Windows programs?", hindi_question: "अधिकांश Windows प्रोग्राम में सहायता तक पहुंचने के लिए कौनसा कुंजी उपयोग होता है?", exam_info: "(SSC CHSL 2023)", options: ["F1", "F2", "F5", "F12"], answer: "F1" },
+            { question: "Which unit determines the speed of processing in a CPU?", hindi_question: "CPU में प्रोसेसिंग की गति कौन निर्धारित करता है?", exam_info: "(Rajasthan RMSSB 2023)", options: ["Clock Speed (Hz)", "Word Size", "Cache Size", "Bus Speed"], answer: "Clock Speed (Hz)" },
+            { question: "What is the function of Control Unit in CPU?", hindi_question: "CPU में कंट्रोल यूनिट का कार्य क्या है?", exam_info: "(SSC CGL 2023)", options: ["Perform arithmetic operations", "Control and manage all units of computer", "Store temporary data", "Provide external connectivity"], answer: "Control and manage all units of computer" },
+            { question: "What does the term ‘booting’ refer to?", hindi_question: "'बूटिंग' शब्द किस प्रक्रिया को दर्शाता है?", exam_info: "(Rajasthan Patwari 2024)", options: ["Installing software", "Starting a computer", "Formatting a disk", "Running a virus scan"], answer: "Starting a computer" },
+            { question: "Which of these is a software license type that is free to use?", hindi_question: "इनमें से कौन सा सॉफ़्टवेयर लाइसेंस मुफ्त उपयोग के लिए है?", exam_info: "(SSC GD 2023)", options: ["Shareware", "Freeware", "Commercial", "Trialware"], answer: "Freeware" },
+            { question: "Which device is used to connect a computer to a telephone line?", hindi_question: "कंप्यूटर को टेलीफोन लाइन से कनेक्ट करने के लिए किस डिवाइस का उपयोग किया जाता है?", exam_info: "(RRB NTPC 2021)", options: ["Modem", "Router", "Switch", "Hub"], answer: "Modem" },
+            { question: "What kind of memory is EEPROM?", hindi_question: "EEPROM किस प्रकार की मेमोरी है?", exam_info: "(SSC CGL 2024)", options: ["Volatile memory", "Non-volatile memory", "Cache memory", "Secondary memory"], answer: "Non-volatile memory" },
+            { question: "Which of the following has the fastest read/write speed?", hindi_question: "निम्न में से किसमें सबसे तेज़ पढ़ने/लिखने की गति होती है?", exam_info: "(SSC CHSL 2024)", options: ["Hard Disk", "SSD", "CD-ROM", "DVD-ROM"], answer: "SSD" },
+            { question: "Which of the following is a wireless transmission medium?", hindi_question: "निम्न में से कौन सा वायरलेस ट्रांसमिशन माध्यम है?", exam_info: "(UP Police 2023)", options: ["Optical fiber", "Infrared", "Coaxial cable", "Ethernet cable"], answer: "Infrared" },
+            { question: "What does HTTP in a web address stand for?", hindi_question: "वेब एड्रेस में HTTP का पूरा नाम क्या है?", exam_info: "(SSC MTS 2024)", options: ["Hyper Text Transfer Protocol", "Hyperlink Transfer Protocol", "Hyper Tool Transfer Program", "Hyper Terminal Text Protocol"], answer: "Hyper Text Transfer Protocol" },
+            { question: "Which hardware device provides a backup power source?", hindi_question: "कौन-सा हार्डवेयर डिवाइस बैकअप पावर स्रोत प्रदान करता है?", exam_info: "(Rajasthan VDO 2024)", options: ["Battery", "UPS", "Generator", "Inverter"], answer: "UPS" },
+            { question: "What is the main purpose of Cache Memory?", hindi_question: "कैश मेमोरी का मुख्य उद्देश्य क्या है?", exam_info: "(SSC CGL 2023)", options: ["Store data permanently", "Speed up data access for the CPU", "Store user documents", "Manage network traffic"], answer: "Speed up data access for the CPU" },
+            { question: "Which key is used to pause and resume screen printing?", hindi_question: "स्क्रीन प्रिंटिंग को रोकने और पुनः शुरू करने के लिए कौन-सी कुंजी का उपयोग होता है?", exam_info: "(SSC GD 2022)", options: ["Pause/Break", "Scroll Lock", "Print Screen", "Caps Lock"], answer: "Pause/Break" }
         ];
 
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const resultsScreen = document.getElementById('results-screen');
 
-        const startBtn = document.getElementById('start-btn');
+        const startPart1Btn = document.getElementById('start-part1-btn');
+        const startPart2Btn = document.getElementById('start-part2-btn');
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
 
         const questionText = document.getElementById('question-text');
         const questionTextHindi = document.getElementById('question-text-hindi');
-        const examInfo = document.getElementById('exam-info'); // New element for exam info
+        const examInfo = document.getElementById('exam-info');
         const optionsContainer = document.getElementById('options-container');
         const scoreText = document.getElementById('score-text');
         const scoreMessage = document.getElementById('score-message');
         const currentQuestionNumber = document.getElementById('current-question-number');
         const progressBar = document.getElementById('progress-bar');
+        const totalQuestionsInPart = document.getElementById('total-questions-in-part');
+        const totalScoreDenominator = document.getElementById('total-score-denominator');
 
         let currentQuestionIndex = 0;
         let score = 0;
+        let quizQuestions = []; // This will hold the questions for the current part
 
-        function startQuiz() {
+        function startQuiz(part) {
+            if (part === 'part1') {
+                quizQuestions = allQuestions.slice(0, 50);
+            } else if (part === 'part2') {
+                quizQuestions = allQuestions.slice(50, 100);
+            }
+
             startScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             currentQuestionIndex = 0;
             score = 0;
+            totalQuestionsInPart.textContent = quizQuestions.length; // Update total questions display
+            totalScoreDenominator.textContent = quizQuestions.length; // Update total score denominator
             loadQuestion();
         }
 
         function loadQuestion() {
             nextBtn.classList.add('hidden');
-            const currentQuestion = questions[currentQuestionIndex];
+            const currentQuestion = quizQuestions[currentQuestionIndex];
             questionText.textContent = currentQuestion.question;
             questionTextHindi.textContent = currentQuestion.hindi_question;
-            examInfo.textContent = currentQuestion.exam_info; // Display exam info
+            examInfo.textContent = currentQuestion.exam_info;
             optionsContainer.innerHTML = '';
 
             currentQuestion.options.forEach(option => {
@@ -181,11 +246,11 @@
             });
 
             currentQuestionNumber.textContent = currentQuestionIndex + 1;
-            progressBar.style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%`;
         }
 
         function selectAnswer(button, selectedOption) {
-            const currentQuestion = questions[currentQuestionIndex];
+            const currentQuestion = quizQuestions[currentQuestionIndex];
             const isCorrect = selectedOption === currentQuestion.answer;
 
             if (isCorrect) {
@@ -207,7 +272,7 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
+            if (currentQuestionIndex < quizQuestions.length) {
                 loadQuestion();
             } else {
                 showResults();
@@ -219,7 +284,7 @@
             resultsScreen.classList.remove('hidden');
             scoreText.textContent = score;
 
-            const percentage = (score / questions.length) * 100;
+            const percentage = (score / quizQuestions.length) * 100;
             if (percentage >= 90) {
                 scoreMessage.textContent = "Excellent! You're a computer whiz!";
             } else if (percentage >= 70) {
@@ -237,7 +302,8 @@
             resultsScreen.classList.add('hidden');
         }
 
-        startBtn.addEventListener('click', startQuiz);
+        startPart1Btn.addEventListener('click', () => startQuiz('part1'));
+        startPart2Btn.addEventListener('click', () => startQuiz('part2'));
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', restartQuiz);
 
