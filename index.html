@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Slate and Blue -->
     <!-- Application Structure Plan: A single-page application with three distinct views: a start screen, a one-question-at-a-time quiz interface, and a final results screen. This structure turns passive reading into an active learning experience by focusing the user on a single question, providing immediate feedback, and summarizing performance at the end. This is far more effective for studying and self-assessment than a static list. -->
-    <!-- Visualization & Content Choices: The source report contains 150 multiple-choice questions. The goal is knowledge testing. The best presentation is an interactive quiz format. Questions are displayed as text, and options are interactive buttons. User clicks provide immediate color-coded feedback (green for correct, red for incorrect). A progress bar and final score are displayed as text. This approach is direct, intuitive, and requires no complex charts, using only HTML, Tailwind CSS, and Vanilla JS. -->
+    <!-- Visualization & Content Choices: The source report contains 203 multiple-choice questions. The goal is knowledge testing. The best presentation is an interactive quiz format. Questions are displayed as text, and options are interactive buttons. User clicks provide immediate color-coded feedback (green for correct, red for incorrect). A progress bar and final score are displayed as text. This approach is direct, intuitive, and requires no complex charts, using only HTML, Tailwind CSS, and Vanilla JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -47,6 +47,7 @@
                 <button id="start-part1-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 1 (1-50)</button>
                 <button id="start-part2-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 2 (51-100)</button>
                 <button id="start-part3-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 3 (101-150)</button>
+                <button id="start-part4-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Computer Fundamentals Quiz - Part 4 (151-203)</button>
             </div>
         </div>
 
@@ -236,7 +237,60 @@
             { question: "Which icon represents network connection status?", hindi_question: "कौनसा आइकन नेटवर्क कनेक्शन स्थिति प्रदर्शित करता है?", exam_info: "(UP VDO 2024)", options: ["Battery icon", "Speaker icon", "Wi‑Fi / नेटवर्क आइकन", "Calendar icon"], answer: "Wi‑Fi / नेटवर्क आइकन" },
             { question: "What does CSV file stand for?", hindi_question: "CSV फ़ाइल का पूरा नाम क्या है?", exam_info: "(SSC GD 2024)", options: ["Comma Separated Values", "Constant System Value", "Core Software Version", "Compressed Shared Volume"], answer: "Comma Separated Values" },
             { question: "Which is used to measure monitor screen size?", hindi_question: "मॉनिटर स्क्रीन का आकार मापने में क्या उपयोग होता है?", exam_info: "(Rajasthan VDO 2024)", options: ["Centimeters", "Inches", "Pixels", "Points"], answer: "Inches" },
-            { question: "Which function key minimizes all open windows?", hindi_question: "कौनसी फ़ंक्शन कुंजी सभी खुले विंडो को न्यूनतम करती है?", exam_info: "(SSC CHSL 2024)", options: ["F11", "F9", "F10", "Windows + D"], answer: "Windows + D" }
+            { question: "Which function key minimizes all open windows?", hindi_question: "कौनसी फ़ंक्शन कुंजी सभी खुले विंडो को न्यूनतम करती है?", exam_info: "(SSC CHSL 2024)", options: ["F11", "F9", "F10", "Windows + D"], answer: "Windows + D" },
+            { question: "What part of the computer temporarily holds instructions?", hindi_question: "कंप्यूटर का कौन-सा हिस्सा अस्थायी रूप से निर्देशों को रखता है?", exam_info: "(SSC MTS 2024)", options: ["Cache", "Register", "RAM", "ROM"], answer: "Register" },
+            { question: "What is the purpose of GPU?", hindi_question: "GPU का मुख्य उद्देश्य क्या है?", exam_info: "(Rajasthan RPSE 2024)", options: ["Manage system memory", "Control display output", "Process graphics and images", "Maintain network connections"], answer: "Process graphics and images" },
+            { question: "Which type of cable is used for high-speed networking?", hindi_question: "उच्च गति नेटवर्किंग के लिए कौन केबल उपयोग होती है?", exam_info: "(SSC GD 2023)", options: ["Coaxial", "Ethernet", "USB", "HDMI"], answer: "Ethernet" },
+            { question: "Which software is used to browse the internet?", hindi_question: "इंटरनेट ब्राउज़ करने के लिए कौन सा सॉफ़्टवेयर उपयोग होता है?", exam_info: "(SSC CGL 2024)", options: ["WordPad", "Notepad", "Browser (Chrome/Firefox)", "Excel"], answer: "Browser (Chrome/Firefox)" },
+            { question: "What is LAN primarily used for?", hindi_question: "LAN का मुख्य उपयोग क्या है?", exam_info: "(UP VDO 2024)", options: ["Connect home devices", "Connect devices in a limited area", "Connect internet globally", "Store large files"], answer: "Connect devices in a limited area" },
+            { question: "Which memory is directly accessible by CPU?", hindi_question: "CPU द्वारा सीधे सुलभ मेमोरी कौन हुई?", exam_info: "(SSC MTS 2024)", options: ["Cache", "RAM", "ROM", "Hard Disk"], answer: "Cache" },
+            { question: "What is the default extension for text files?", hindi_question: "टेक्स्ट फ़ाइलों का डिफ़ॉल्ट एक्सटेंशन क्या है?", exam_info: "(SSC GD 2024)", options: [".doc", ".txt", ".pdf", ".xls"], answer: ".txt" },
+            { question: "Which unit is responsible for control and coordination?", hindi_question: "कंप्यूटर का कौन-सा यूनिट नियंत्रण और समन्वय के लिए जिम्मेदार है?", exam_info: "(Rajasthan RMSSB 2024)", options: ["RAM", "CPU", "Control Unit", "ALU"], answer: "Control Unit" },
+            { question: "Which device is used to scan documents?", hindi_question: "दस्तावेज़ स्कैन करने के लिए कौन सा उपकरण उपयोग होता है?", exam_info: "(SSC CHSL 2024)", options: ["Printer", "Scanner", "Modem", "Mouse"], answer: "Scanner" },
+            { question: "In which memory is BIOS stored?", hindi_question: "BIOS किस मेमोरी में संग्रहित होता है?", exam_info: "(SSC CGL 2024)", options: ["RAM", "Cache", "ROM", "Hard Disk"], answer: "ROM" },
+            { question: "Which unit processes sound signals?", hindi_question: "ध्वनि संकेतों को प्रोसेस करने वाला यूनिट कौन है?", exam_info: "(UP Police 2024)", options: ["Sound Card", "Graphics Card", "Network Card", "Video Card"], answer: "Sound Card" },
+            { question: "What is the use of USB port?", hindi_question: "USB पोर्ट का उपयोग क्या है?", exam_info: "(SSC GD 2024)", options: ["Connect display only", "Connect input devices only", "Connect multiple peripherals", "Connect network cables"], answer: "Connect multiple peripherals" },
+            { question: "Which key combination is used to undo an action?", hindi_question: "किस कुंजी संयोजन का उपयोग क्रिया पूर्ववत करने के लिए किया जाता है?", exam_info: "(SSC CHSL 2024)", options: ["Ctrl + Z", "Ctrl + Y", "Ctrl + U", "Ctrl + T"], answer: "Ctrl + Z" },
+            { question: "Which memory is used to store BIOS setup?", hindi_question: "BIOS सेटअप संग्रहीत करने के लिए कौनसी मेमोरी उपयोग होती है?", exam_info: "(Rajasthan VDO 2024)", options: ["RAM", "Cache", "ROM", "Hard Disk"], answer: "ROM" },
+            { question: "Which is considered secondary memory?", hindi_question: "किसे माध्यमिक स्मृति माना जाता है?", exam_info: "(Rajasthan RMSSB 2024)", options: ["RAM", "ROM", "Hard Disk", "Cache"], answer: "Hard Disk" },
+            { question: "Which interface connects display card to monitor?", hindi_question: "डिस्प्ले कार्ड को मॉनिटर से कौन इंटरफ़ेस जोड़ता है?", exam_info: "(SSC GD 2023)", options: ["USB", "HDMI", "Ethernet", "Serial Port"], answer: "HDMI" },
+            { question: "Which storage device uses light to read/write?", hindi_question: "कौनसा स्टोरेज डिवाइस पढ़ने/लिखने के लिए प्रकाश उपयोग करता है?", exam_info: "(SSC MTS 2024)", options: ["Hard Disk", "SSD", "Optical Drive", "USB Drive"], answer: "Optical Drive" },
+            { question: "What is BIOS used for?", hindi_question: "BIOS का उपयोग किस लिए किया जाता है?", exam_info: "(SSC CGL 2024)", options: ["Run applications", "Initialize system at boot", "Store user data", "Connect network"], answer: "Initialize system at boot" },
+            { question: "Which key is used to enter BIOS setup?", hindi_question: "BIOS सेटअप में प्रवेश करने के लिए कौन सा कुंजी उपयोग होती है?", exam_info: "(Rajasthan Patwari 2024)", options: ["F1", "F2", "F5", "F12"], answer: "F2" },
+            { question: "What does VGA port stand for?", hindi_question: "VGA पोर्ट का पूरा नाम क्या है?", exam_info: "(UP VDO 2024)", options: ["Video Graphics Array", "Visual Graphics Access", "Video Graphics Access", "Visual Graphics Array"], answer: "Video Graphics Array" },
+            { question: "Which device translates digital to visual display?", hindi_question: "डिवाइस जो डिजिटल को दृश्य डिस्प्ले में अनुवाद करता है?", exam_info: "(SSC CHSL 2024)", options: ["Speaker", "Monitor", "Keyboard", "Printer"], answer: "Monitor" },
+            { question: "Which processor speed is measured in?", hindi_question: "प्रोसेसर की गति किसमें मापी जाती है?", exam_info: "(SSC CGL 2024)", options: ["Bytes", "Hertz", "Volts", "Bytes per second"], answer: "Hertz" },
+            { question: "Which device is commonly used to input handwriting?", hindi_question: "कौनसा उपकरण लिखावट इनपुट करने के लिए उपयोग होता है?", exam_info: "(Rajasthan RMSSB 2024)", options: ["Scanner", "Graphics Tablet", "Mouse", "Printer"], answer: "Graphics Tablet" },
+            { question: "What is the full form of PDF?", hindi_question: "PDF का पूरा नाम क्या है?", exam_info: "(UP Police 2024)", options: ["Portable Data Format", "Portable Document Format", "Public Data Format", "Private Document Format"], answer: "Portable Document Format" },
+            { question: "What is erosion of memory cells in SSD called?", hindi_question: "SSD में मेमोरी सेल्स की क्षरण को क्या कहा जाता है?", exam_info: "(SSC GD 2024)", options: ["Wear leveling", "Write amplification", "Orbiting decay", "Program/Erase cycle wear"], answer: "Program/Erase cycle wear" },
+            { question: "What is the output of the ALU?", hindi_question: "ALU का आउटपुट क्या होता है?", exam_info: "(Rajasthan VDO 2024)", options: ["Control signals", "Processed data", "Power supply", "Internal clock"], answer: "Processed data" },
+            { question: "Which memory is fastest in computer architecture?", hindi_question: "कंप्यूटर आर्किटेक्चर में कौन-सी मेमोरी सबसे तेज है?", exam_info: "(SSC MTS 2024)", options: ["Hard Disk", "RAM", "Cache", "ROM"], answer: "Cache" },
+            { question: "Which port is used to connect printers?", hindi_question: "प्रिंटर कनेक्ट करने के लिए कौन-सा पोर्ट उपयोग होता है?", exam_info: "(SSC CGL 2024)", options: ["HDMI", "USB", "VGA", "Serial"], answer: "USB" },
+            { question: "What does BIOS initialize?", hindi_question: "BIOS क्या प्रारंभिक करता है?", exam_info: "(SSC CHSL 2024)", options: ["Applications", "Hardware", "Network", "User settings"], answer: "Hardware" },
+            { question: "What device helps in wireless networking?", hindi_question: "वायरलेस नेटवर्किंग में कौन सा उपकरण सहायता करता है?", exam_info: "(UP VDO 2024)", options: ["LAN card", "Wi‑Fi Adapter", "Hard Disk", "Printer"], answer: "Wi‑Fi Adapter" },
+            { question: "Which unit fetches instructions from memory?", hindi_question: "कौन-सा यूनिट मेमोरी से निर्देश लाता है?", exam_info: "(Rajasthan Patwari 2024)", options: ["ALU", "Control Unit", "Cache", "Register"], answer: "Control Unit" },
+            { question: "What kind of memory is used to store BIOS settings?", hindi_question: "BIOS सेटिंग्स स्टोर करने के लिए कौनसी मेमोरी उपयोग होती है?", exam_info: "(RMSSB Rajasthan 2024)", options: ["RAM", "ROM", "Cache", "Hard Disk"], answer: "ROM" },
+            { question: "Which language is closest to machine language?", hindi_question: "कौनसी भाषा मशीन भाषा के सबसे निकट है?", exam_info: "(SSC CGL 2024)", options: ["Assembly", "Python", "C", "Java"], answer: "Assembly" },
+            { question: "Which of the following is peripheral device?", hindi_question: "निम्नलिखित में से कौन पेरिफेरल डिवाइस है?", exam_info: "(Rajasthan VDO 2024)", options: ["ALU", "Control Unit", "Printer", "CPU"], answer: "Printer" },
+            { question: "Which of these is ROM type?", hindi_question: "इनमें से कौन ROM का प्रकार है?", exam_info: "(SSC MTS 2024)", options: ["PROM", "RAM", "Cache", "Register"], answer: "PROM" },
+            { question: "Which device displays BIOS POST messages?", hindi_question: "कौन-सा उपकरण BIOS POST संदेश दिखाता है?", exam_info: "(Rajasthan Patwari 2024)", options: ["Monitor", "Printer", "Speaker", "Keyboard"], answer: "Monitor" },
+            { question: "What is the major function of ALU?", hindi_question: "ALU का प्रमुख कार्य क्या है?", exam_info: "(SSC CHSL 2024)", options: ["Control operations", "Perform arithmetic operations", "Store data", "Fetch instructions"], answer: "Perform arithmetic operations" },
+            { question: "What is a peripheral device attached to a computer?", hindi_question: "कंप्यूटर से जुड़ा पेरिफेरल डिवाइस क्या है?", exam_info: "(RMSSB Rajasthan 2024)", options: ["RAM", "Keyboard", "CPU", "ROM"], answer: "Keyboard" },
+            { question: "Which of the following memory is erasable electronically?", hindi_question: "निम्नलिखित में से कौन सी मेमोरी इलेक्ट्रॉनिक रूप से मिटाई जा सकती है?", exam_info: "(SSC CGL 2024)", options: ["EPROM", "Hard Disk", "Cache", "Register"], answer: "EPROM" },
+            { question: "Which part of the computer interprets commands?", hindi_question: "कंप्यूटर का कौन-सा भाग कमांड्स की व्याख्या करता है?", exam_info: "(Rajasthan VDO 2024)", options: ["Register", "Control Unit", "RAM", "ALU"], answer: "Control Unit" },
+            { question: "Which of the following is used to fix hardware problems?", hindi_question: "हार्डवेयर समस्याओं को हल करने के लिए क्या उपयोग किया जाता है?", exam_info: "(SSC GD 2024)", options: ["Antivirus", "Diagnostic software", "Browser", "Text editor"], answer: "Diagnostic software" },
+            { question: "What does PSU stand for in desktop computer?", hindi_question: "डेस्कटॉप कंप्यूटर में PSU का पूरा नाम क्या है?", exam_info: "(Rajasthan Patwari 2024)", options: ["Power Supply Unit", "Processor System Unit", "Peripheral System Unit", "Power System Unit"], answer: "Power Supply Unit" },
+            { question: "Which type of memory is faster than HDD but slower than cache?", hindi_question: "कौनसी मेमोरी HDD से तेज लेकिन कैश से धीमी होती है?", exam_info: "(SSC MTS 2024)", options: ["RAM", "ROM", "CD-ROM", "Register"], answer: "RAM" },
+            { question: "What kind of device is a joystick?", hindi_question: "जॉयस्टिक किस प्रकार का उपकरण है?", exam_info: "(Rajasthan RMSSB 2024)", options: ["Output device", "Input device", "Storage device", "None of these"], answer: "Input device" },
+            { question: "Which interface port is typically blue in color?", hindi_question: "आमतौर पर किस इंटरफेस पोर्ट का रंग नीला होता है?", exam_info: "(SSC CHSL 2024)", options: ["USB", "VGA", "HDMI", "Ethernet"], answer: "VGA" },
+            { question: "Which type of memory is used in snake games etc.?", hindi_question: "स्नेक गेम्स आदि में उपयोग की गई मेमोरी किस प्रकार की होती है?", exam_info: "(RMSSB Rajasthan 2024)", options: ["RAM", "ROM", "Cache", "Hard Disk"], answer: "RAM" },
+            { question: "What is measured in pixels?", hindi_question: "किसमें पिक्सेल्स प्रयोग होते हैं मापन के लिए?", exam_info: "(Rajasthan VDO 2024)", options: ["Sound", "Display resolution", "CPU speed", "Memory capacity"], answer: "Display resolution" },
+            { question: "Which key launches Task Manager in Windows?", hindi_question: "Windows में Task Manager लॉन्च करने के लिए कौनसी कुंजी का उपयोग होता है?", exam_info: "(SSC CGL 2024)", options: ["Ctrl + Alt + Del", "Ctrl + Shift + Esc", "Alt + Tab", "Ctrl + Esc"], answer: "Ctrl + Alt + Del" },
+            { question: "What kind of memory is best for CPU caching?", hindi_question: "CPU कैशिंग के लिए कौन सी मेमोरी सबसे उपयुक्त है?", exam_info: "(SSC MTS 2024)", options: ["RAM", "Hard Disk", "Cache", "ROM"], answer: "Cache" },
+            { question: "Which device detects electrical activity from the brain?", hindi_question: "मस्तिष्क से विद्युत गतिविधि पता लगाने वाला उपकरण कौन सा है?", exam_info: "(SSC GD 2024)", options: ["Scanner", "EEG machine", "Printer", "Monitor"], answer: "EEG machine" },
+            { question: "Which port is used for network cable?", hindi_question: "नेटवर्क केबल के लिए कौनसा पोर्ट उपयोग होता है?", exam_info: "(Rajasthan RMSSB 2024)", options: ["USB", "Ethernet", "VGA", "HDMI"], answer: "Ethernet" },
+            { question: "Which key is used to open the Run dialog box?", hindi_question: "Run डायलॉग बॉक्स खोलने के लिए कौनसी कुंजी उपयोग होती है?", exam_info: "(Rajasthan VDO 2024)", options: ["Windows + R", "Ctrl + R", "Alt + R", "Shift + R"], answer: "Windows + R" },
+            { question: "What does HDMI stand for?", hindi_question: "HDMI का पूरा रूप क्या है?", exam_info: "(SSC CHSL 2024)", options: ["High Definition Multimedia Interface", "High Data Multimedia Interface", "High Definition Media Input", "Hyper Digital Multimedia Interface"], answer: "High Definition Multimedia Interface" }
         ];
 
         const startScreen = document.getElementById('start-screen');
@@ -245,7 +299,8 @@
 
         const startPart1Btn = document.getElementById('start-part1-btn');
         const startPart2Btn = document.getElementById('start-part2-btn');
-        const startPart3Btn = document.getElementById('start-part3-btn'); // New button for Part 3
+        const startPart3Btn = document.getElementById('start-part3-btn');
+        const startPart4Btn = document.getElementById('start-part4-btn'); // New button element
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
 
@@ -269,8 +324,10 @@
                 quizQuestions = allQuestions.slice(0, 50);
             } else if (part === 'part2') {
                 quizQuestions = allQuestions.slice(50, 100);
-            } else if (part === 'part3') { // Handle Part 3
+            } else if (part === 'part3') {
                 quizQuestions = allQuestions.slice(100, 150);
+            } else if (part === 'part4') { // Handle Part 4
+                quizQuestions = allQuestions.slice(150, 203); // Slice from index 150 to 203 (exclusive of 203)
             }
 
             startScreen.classList.add('hidden');
@@ -358,7 +415,8 @@
 
         startPart1Btn.addEventListener('click', () => startQuiz('part1'));
         startPart2Btn.addEventListener('click', () => startQuiz('part2'));
-        startPart3Btn.addEventListener('click', () => startQuiz('part3')); // Event listener for Part 3
+        startPart3Btn.addEventListener('click', () => startQuiz('part3'));
+        startPart4Btn.addEventListener('click', () => startQuiz('part4')); // Event listener for Part 4
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', restartQuiz);
 
